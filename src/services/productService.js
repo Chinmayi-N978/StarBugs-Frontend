@@ -1,16 +1,18 @@
 import axios from 'axios';
 
-const API_URL = 'https://starbugs-backend.onrender.com/api/products';
+const API_URL = '/api/products';
 
 const productService = {
   getAllProducts: async () => {
     try {
       const token = localStorage.getItem('jwt_token');
+
       const response = await axios.get(API_URL, {
         headers: {
           'Authorization': token ? `Bearer ${token}` : ''
         }
       });
+
       return response.data;
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -21,11 +23,13 @@ const productService = {
   getAllCategories: async () => {
     try {
       const token = localStorage.getItem('jwt_token');
-      const response = await axios.get('https://starbugs-backend.onrender.com/api/categories', {
+
+      const response = await axios.get('/api/categories', {
         headers: {
           'Authorization': token ? `Bearer ${token}` : ''
         }
       });
+
       return response.data;
     } catch (error) {
       console.error('Error fetching categories:', error);
