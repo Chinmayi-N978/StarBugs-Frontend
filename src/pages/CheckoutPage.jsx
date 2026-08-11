@@ -14,7 +14,7 @@ const CheckoutPage = () => {
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [loading, setLoading] = useState(true);
-  
+
   const [newAddress, setNewAddress] = useState({
     fullName: '',
     phoneNumber: '',
@@ -40,7 +40,7 @@ const CheckoutPage = () => {
       ]);
       setCartData(cart);
       setAddresses(userAddresses);
-      
+
       if (userAddresses.length > 0) {
         const defaultAddr = userAddresses.find(a => a.isDefault) || userAddresses[0];
         setSelectedAddressId(defaultAddr.id);
@@ -105,12 +105,12 @@ const CheckoutPage = () => {
       toast.error("Please select a delivery address");
       return;
     }
-    
+
     try {
       const orderResponse = await paymentService.createOrder(selectedAddressId);
-      
+
       const options = {
-        key: "rzp_test_TK5JI841MjDj62", // Razorpay Key ID
+        key: "rzp_test_TObIzVR2DrCDfI", // Razorpay Key ID
         amount: orderResponse.amount * 100, // amount in paise
         currency: orderResponse.currency,
         name: "E-Commerce Store",
@@ -139,13 +139,13 @@ const CheckoutPage = () => {
           color: "#000000"
         }
       };
-      
+
       const rzp = new window.Razorpay(options);
-      rzp.on('payment.failed', function (response){
+      rzp.on('payment.failed', function (response) {
         toast.error("Payment failed. Please try again.");
       });
       rzp.open();
-      
+
     } catch (error) {
       console.error("Failed to initiate payment", error);
       toast.error("Failed to initiate payment");
@@ -169,8 +169,8 @@ const CheckoutPage = () => {
       <div className="checkout-page-container">
         <Navbar />
         <main className="checkout-main">
-           <h2>Your cart is empty</h2>
-           <button onClick={() => navigate('/products')}>Go to Shop</button>
+          <h2>Your cart is empty</h2>
+          <button onClick={() => navigate('/products')}>Go to Shop</button>
         </main>
       </div>
     );
@@ -179,7 +179,7 @@ const CheckoutPage = () => {
   return (
     <div className="checkout-page-container">
       <Navbar cartCount={cartData?.cartTotalItems || 0} />
-      
+
       <main className="checkout-main">
         <div className="checkout-header">
           <button className="back-btn" onClick={() => navigate('/cart')}>
@@ -189,16 +189,16 @@ const CheckoutPage = () => {
         </div>
 
         <div className="checkout-content">
-          
+
           <div className="checkout-left">
             <section className="address-section">
               <h2><MapPin size={24} /> Delivery Address</h2>
-              
+
               {addresses.length > 0 && !showAddForm && (
                 <div className="address-list">
                   {addresses.map(addr => (
-                    <div 
-                      key={addr.id} 
+                    <div
+                      key={addr.id}
                       className={`address-card ${selectedAddressId === addr.id ? 'selected' : ''}`}
                       onClick={() => setSelectedAddressId(addr.id)}
                     >
@@ -240,7 +240,7 @@ const CheckoutPage = () => {
                     <input type="checkbox" id="isDefault" name="isDefault" checked={newAddress.isDefault} onChange={handleInputChange} />
                     <label htmlFor="isDefault">Make this my default address</label>
                   </div>
-                  
+
                   <div className="form-actions">
                     {addresses.length > 0 && (
                       <button type="button" className="cancel-btn" onClick={() => setShowAddForm(false)}>Cancel</button>
@@ -266,7 +266,7 @@ const CheckoutPage = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="summary-totals">
                 <div className="summary-row">
                   <span>Subtotal</span>
@@ -285,9 +285,9 @@ const CheckoutPage = () => {
                   <span>{formatPrice(cartData.cartTotalPrice)}</span>
                 </div>
               </div>
-              
-              <button 
-                className="proceed-payment-btn" 
+
+              <button
+                className="proceed-payment-btn"
                 onClick={handleProceedToPayment}
                 disabled={!selectedAddressId}
               >

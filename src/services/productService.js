@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/products';
+const API_URL = 'https://starbugs-backend.onrender.com/api/products';
 
 const productService = {
   getAllProducts: async () => {
@@ -21,7 +21,7 @@ const productService = {
   getAllCategories: async () => {
     try {
       const token = localStorage.getItem('jwt_token');
-      const response = await axios.get('http://localhost:8080/api/categories', {
+      const response = await axios.get('https://starbugs-backend.onrender.com/api/categories', {
         headers: {
           'Authorization': token ? `Bearer ${token}` : ''
         }
